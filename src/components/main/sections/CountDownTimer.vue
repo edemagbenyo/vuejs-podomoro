@@ -1,13 +1,31 @@
 <template>
   <div class="container">
     <div class="row">
-      <svg-circle-sector class="justify-content-center" :angle="angle" :text="text"></svg-circle-sector>
+      <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+        <h1>Podomoro</h1>
+        <svg-circle-sector class="justify-content-center" :angle="angle" :text="text"></svg-circle-sector>
       <div class="controls">
         <div class="btn-group" role="group">
-          <button @click="start" type="button" class="btn btn-link" v-bind:class="{disabled:isStarted}">Start</button>
-          <button @click="pause" type="button" class="btn btn-link" v-bind:class="{disabled:isPaused}">Pause</button>
-          <button @click="stop" type="button" class="btn btn-link" v-bind:class="{disabled:isStopped}">Stop</button>
+          <button
+            @click="start"
+            type="button"
+            class="btn btn-link"
+            v-bind:class="{disabled:isStarted}"
+          >Start</button>
+          <button
+            @click="pause"
+            type="button"
+            class="btn btn-link"
+            v-bind:class="{disabled:isPaused}"
+          >Pause</button>
+          <button
+            @click="stop"
+            type="button"
+            class="btn btn-link"
+            v-bind:class="{disabled:isStopped}"
+          >Stop</button>
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -20,9 +38,9 @@ export default {
     return {
       timestamp: this.time,
       interval: null,
-      isStarted:false,
-      isPaused:true,
-      isStopped:true
+      isStarted: false,
+      isPaused: true,
+      isStopped: true
     };
   },
   computed: {
@@ -46,27 +64,31 @@ export default {
     start() {
       this.interval = setInterval(() => {
         this.timestamp--;
-        if (this.timestamp === 0) {
-          this.timestamp = this.time;
+        if (this.timestamp <= 0) {
+          this.$emit("finished");
+          console.log("Lap done");
+          // this.timestamp = this.time;
         }
       }, 1000);
 
       this.isStopped = false;
-        this.isStarted = true;
-        this.isPaused = false;
+      this.isStarted = true;
+      this.isPaused = false;
+
+      
     },
     stop() {
-        clearInterval(this.interval) 
-        this.timestamp = this.time
-        this.isStopped = true;
-        this.isStarted = false;
-        this.isPaused = false;
+      clearInterval(this.interval);
+      this.timestamp = this.time;
+      this.isStopped = true;
+      this.isStarted = false;
+      this.isPaused = false;
     },
     pause() {
-        clearInterval(this.interval)
-        this.isStopped = false;
-        this.isStarted = false;
-        this.isPaused = true;
+      clearInterval(this.interval);
+      this.isStopped = false;
+      this.isStarted = false;
+      this.isPaused = true;
     }
   }
 };

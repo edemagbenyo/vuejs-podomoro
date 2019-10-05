@@ -1,41 +1,72 @@
 <template>
-  <div>
-    <h1>Podomoro</h1>
-    <count-down-timer :time="time" angle="12" class="col-sm-12 col-md-8 col-lg-6 col-xl-4"></count-down-timer>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="jumbotron">
+        <div class="container">
+          <img class="img-fluid rounded" src="IMAGE_SOURCE" alt />
+          <h2>Push-ups</h2>
+          <lead>Description: lorem ipsum</lead>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <count-down-timer
+        :time="time"
+        angle="12"
+        @finished="togglePomodoro"
+        class="col-sm-12 col-md-8 col-lg-6 col-xl-4"
+      ></count-down-timer>
+    </div>
   </div>
 </template>
 
 <script>
 import CountDownTimer from "./CountDownTimer";
-import config from '../../../config';
+import config from "../../../config";
 export default {
   name: "Header",
-  data(){
+  data() {
     return {
-       isWorking: true,
-       isShortBreak: false,
-       isLongBreak: false,
-       pomodoros: 0
-}
+      isWorking: true,
+      isShortBreak: false,
+      isLongBreak: false,
+      pomodoros: 0
+    };
   },
   components: {
     CountDownTimer
   },
-  computed:{
-    time(){
+  computed: {
+    time() {
       let minutes;
 
-      if(this.isWorking){
+      if (this.isWorking) {
         minutes = config.workingPomodoro;
-      }else if(this.isShortBreak){
-        minutes = config.shortBreak
-      }else if(this.isLongBreak){
-        minutes = config.longBreak
+      } else if (this.isShortBreak) {
+        minutes = config.shortBreak;
+      } else if (this.isLongBreak) {
+        minutes = config.longBreak;
       }
 
-      return minutes*60;
+      return minutes * 60;
     }
   },
+  methods: {
+    togglePomodoro() {
+      // toggle the working state
+      this.isWorking = !this.isWorking;
+      // reset break states
+      this.isShortBreak = this.isLongBreak = false;
+      // we have switched to the working state, just return
+      if (this.isWorking) {
+        return;
+      }
+      // we have switched to the break state, increase the number of pomodoros and choose between long and short break
+      this.pomodoros++;
+      this.isLongBreak = this.pomodoros % config.pomodorosTillLongBreak === 0;
+      this.isShortBreak = !this.isLongBreak;
+    }
+  }
 };
 </script>
 
