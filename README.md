@@ -1,6 +1,6 @@
-# Podomoro Timer
+# ProFitOro Timer Application
 
-> A Vue.js project
+> A Vue.js project that implements a podomoro timer
 
 ## Build Setup
 
