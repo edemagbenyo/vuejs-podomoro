@@ -1,7 +1,7 @@
 const config = {
-  workingPomodoro: 25,
-  shortBreak: 5,
-  longBreak: 10,
+  workingPomodoro: 5,
+  shortBreak: 2,
+  longBreak: 3,
   pomodorosTillLongBreak: 3
 }
 export default {
