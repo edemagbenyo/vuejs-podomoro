@@ -22,7 +22,7 @@
 
 <script>
 import CountDownTimer from "./CountDownTimer";
-import config from "../../../config";
+import {mapGetters} from 'vuex'
 export default {
   name: "Header",
   data() {
@@ -37,15 +37,18 @@ export default {
     CountDownTimer
   },
   computed: {
+    ...mapGetters({
+      config:'getConfig'
+    }),
     time() {
       let minutes;
 
       if (this.isWorking) {
-        minutes = config.workingPomodoro;
+        minutes = this.config.workingPomodoro;
       } else if (this.isShortBreak) {
-        minutes = config.shortBreak;
+        minutes = this.config.shortBreak;
       } else if (this.isLongBreak) {
-        minutes = config.longBreak;
+        minutes = this.config.longBreak;
       }
 
       return minutes * 60;
@@ -63,7 +66,7 @@ export default {
       }
       // we have switched to the break state, increase the number of pomodoros and choose between long and short break
       this.pomodoros++;
-      this.isLongBreak = this.pomodoros % config.pomodorosTillLongBreak === 0;
+      this.isLongBreak = this.pomodoros % this.config.pomodorosTillLongBreak === 0;
       this.isShortBreak = !this.isLongBreak;
     }
   }
