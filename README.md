@@ -1,4 +1,4 @@
-# logikonsult
+# Podomoro Timer
 
 > A Vue.js project
 
