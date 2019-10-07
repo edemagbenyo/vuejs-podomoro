@@ -5,7 +5,7 @@
         <div class="container">
           <img class="img-fluid rounded" src="IMAGE_SOURCE" alt />
           <h2>Push-ups</h2>
-          <lead>Description: lorem ipsum</lead>
+          <span>Description: lorem ipsum</span>
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@ export default {
       let minutes;
 
       if (this.isWorking) {
-        minutes = this.config.workingPomodoro;
+        minutes = this.config.workingPodomoro;
       } else if (this.isShortBreak) {
         minutes = this.config.shortBreak;
       } else if (this.isLongBreak) {
